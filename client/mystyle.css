@@ -1,0 +1,226 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+body,html{
+	/*background-color: yellow;*/
+	height: 100%;
+	width: 100%;
+	background-color: purple;
+}
+
+div.wrapper{
+	/*margin : 20px auto 0 auto; */
+	margin : 0px auto ; 
+	bottom: 1px solid red;
+	width: 1000px;
+	height: 100%;
+	padding-top: 20px;
+}
+
+
+div.a{
+	position: absolute;
+	background-color: green;
+	bottom: 1px solid red;
+	width: 500px;
+	min-height: 50%;
+	height: auto;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	float:left;
+	padding-top: 10px;
+	/*padding: 20px;*/
+}
+
+div.b{
+	position: absolute;
+	background-color: blue;
+	bottom: 1px solid red;
+	width: 300px;
+	height: 40%;
+	margin-left: 520px;
+	/*float: right;*/
+	padding-top: 10px;
+}
+
+div.c{
+	position: relative;
+	clear: both;
+	margin:0px;
+    background-color: purple;
+	width: 100%;
+	min-height: 30%;
+	height: auto;
+	bottom: 0
+}
+
+div.d{
+	background-color: pink;
+	bottom: 1px solid darkgray;
+	width: 220px;
+	height: 150px;
+	display: inline-block;
+}
+div.innerCont{
+	display: block;
+	margin: 0 auto;
+}
+
+
+div.d div{
+  background-color: red;
+  line-height: 150px;
+  text-align: center;
+}
+
+/*div.d:first-child{
+margin-right: 40px;
+}*/
+
+div.d:first-child{
+margin-left: 20px;
+margin-right: 8px;
+}
+
+div.d:nth-child(2) {
+ /*float: right;*/
+ margin-left: 8px;
+margin-right: 20px;
+}
+div.alpha{
+	margin-left: 20px;
+}
+div.alphafooter{
+	padding-left: 10%;
+}
+div.cont{
+	height: 100%;
+	width: 100%;
+	background-color: lightgray;
+}
+
+
+@media only screen and (max-width: 840px) {
+
+div.a{
+
+	position: static;
+	background-color: green;
+	bottom: 1px solid red;
+	width: 100%;
+	min-height: 50%;
+	height: auto;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	/*float:left;*/
+	padding-top: 10px;
+	/*padding: 20px;*/
+}
+
+div.b{
+
+	position: static;
+	background-color: blue;
+	bottom: 1px solid red;
+	width: 100%;
+	height: 40%;
+	margin-left: 0px;
+	/*margin-left: 520px;*/
+	/*float: left;*/
+	padding-top: 10px;
+}
+
+	
+	div.wrapper{
+	margin : 0px auto ; 
+	bottom: 1px solid red;
+	width: 100%;
+	height: 100%;
+	padding-top: 10px;
+     }
+	.cont{
+		width: 100%;
+		padding-bottom:10px;
+	}
+	body,html{
+	/*background-color: yellow;*/
+	height: 100%;
+	width: 100%;
+	background-color: purple;
+    }
+    
+    div.a{
+/*	background-color: yellow;*/
+	display: block;
+	width: 100%;
+
+}
+
+    div.b{
+	background-color: blue;
+	display: block;
+	width: 100%;
+	margin-bottom: 20px;
+
+}
+div.c{
+	clear: both;
+	background-color: purple;
+	display: block;
+	margin-top: 20px;
+}
+
+
+}
+
+
+@media only screen and (max-width: 450px) {
+
+body,html{
+	background-color: lightgray;
+    }
+	
+div.d{
+	background-color: lightgreen;
+	bottom: 1px solid darkgray;
+    width: auto;
+	display: block;
+}
+div.a{
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+
+
+div.b{
+	background-color: blue;
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+
+}
+
+div.c{
+	clear: both;
+	background-color: purple;
+	display: block;
+	width: 100%;
+	margin-top: 10px;
+}
+
+
+div.d:first-child{
+margin-bottom:10px;
+margin-left: 10px;
+margin-right: 10px;
+}
+
+div.d:nth-child(2) {
+margin-bottom:10px;
+margin-left: 10px;
+margin-right: 10px;
+}
+}
