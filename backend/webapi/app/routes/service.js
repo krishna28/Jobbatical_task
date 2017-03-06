@@ -1,7 +1,7 @@
 module.exports = function(app,express,db){
     
     var api = express.Router();
-    var max = 6;
+    var max = 5;
     var page = 0;
     var offset = page * max;
 
@@ -15,7 +15,7 @@ module.exports = function(app,express,db){
         }
 
 
-        db.any("select users.*, count(users.id) count , array_agg(listings.name) lname from users left join applications on users.id = applications.user_id  left join listings on users.id = listings.created_by  group by users.id,users.id  order by users.id LIMIT $1 OFFSET $2", [max,offset])
+        db.any("select u.id,u.name,u.created_at,count(app.user_id) , array_agg(listings.name ORDER BY listings.created_by desc) lname from users u left join applications app on (u.id = app.user_id  and  app.created_at > current_date - interval '7 days') left join listings on u.id = listings.created_by group by u.id order by u.id LIMIT $1 OFFSET $2", [max,offset])
                     .then(data => {
 
                          res.json(data);            
@@ -26,6 +26,7 @@ module.exports = function(app,express,db){
                     });
       
        });
+
 
 
       api.get('/users',function(req,res){
