@@ -5,8 +5,6 @@ module.exports = function(app,express,db){
     var page = 0;
     var offset = page * max;
 
-
-    var arr = [];
     
       api.get('/topActiveUsers',function(req,res){
 
@@ -28,31 +26,56 @@ module.exports = function(app,express,db){
        });
 
 
+     api.get('/users',function(req,res){
 
-      api.get('/users',function(req,res){
+                var id = null
 
-        var id = null
 
-        if(req.query.id){
-            id = req.query.id;
-        }
+                var customRes = {
+                    id:"",
+                    name:"",
+                    createdAt:"",
+                    companies:[],
+                    createdListings:[],
+                    applications:[]
+                }
 
-        db.any("select * from users  where id = $1", [id])
-                    .then(data => {
+                    if(req.query.id){
+                        id = req.query.id;
+                    }else{
+                     res.json({"code":"400",message:"please pass id as query string. Ex /api/users?id=1"})   
+                    }
 
-                        // success;
-
-                    res.json(data);  
-
+                  db.task(t=> {
+                    return t.one("select u.id,u.name,u.created_at from users u where id = $1", [id])
+                    .then(user => {
+                        customRes.id= user.id;
+                        customRes.name= user.name;
+                        customRes.createdAt = user.created_at;
+                         return db.any("select c.id, c.name, c.created_at, t.contact_user from companies c inner join teams t on (c.id = t.company_id and t.user_id = $1)",[customRes.id])
+                        // return t.any("SELECT * from applications where user_id = $1", [user.id]);
                     })
-                    .catch(error => {
-
-                        // error;
-                         res.json({status:500,message:'Error in the server'});
-                    });
+                    .then(companies=>{
+                        customRes.companies = companies
+                        return  db.any("select l.id,l.created_at createdAt,l.name,l.description from listings l  where l.created_by = $1",[customRes.id]) 
+                    })
+                   })
+                    .then(listings=> {
+                        console.log("listings are as follows" ,listings);
+                        customRes.createdListings= listings
+                      return db.any("select app.id,app.created_at createdAt,app.cover_letter,l.id,l.description,l.name from applications app , listings l where l.id = app.listing_id and app.user_id = $1",[customRes.id])
+                        // success
+                    })
+                    .then(applications=>{
+                       customRes.applications= applications; 
+                        res.json(customRes)
+                    })
+                .catch(error=> {
+                       res.json({"code":"500",message:"server side issue."})
+                    // error
+                });
       
        });
-
 
 
 
