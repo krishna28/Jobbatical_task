@@ -7,13 +7,14 @@ module.exports = function(app,express,db){
 
     
       api.get('/topActiveUsers',function(req,res){
+         page = +req.query.page; //will convert string to int
 
-        if(req.query.page){
-            offset = +(req.query.page-1) * max;
+        if(page){
+            offset = +(page-1) * max;
         }
 
 
-        db.any("select u.id,u.name,u.created_at,count(app.user_id) , array_agg(listings.name ORDER BY listings.created_by desc) lname from users u left join applications app on (u.id = app.user_id  and  app.created_at > current_date - interval '7 days') left join listings on u.id = listings.created_by group by u.id order by u.id LIMIT $1 OFFSET $2", [max,offset])
+        db.any("select u.id,u.name,u.created_at createdAt,count(app.user_id) , array_agg(listings.name ORDER BY listings.created_by desc) as listings from users u left join applications app on (u.id = app.user_id  and  app.created_at > current_date - interval '7 days') left join listings on u.id = listings.created_by group by u.id order by u.id LIMIT $1 OFFSET $2", [max,offset])
                     .then(data => {
 
                          res.json(data);            
